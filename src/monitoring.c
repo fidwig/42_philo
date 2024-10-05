@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:04:11 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/04 16:48:19 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/05 18:22:45 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ bool	check_for_death(t_data *data, int *id)
 		if (get_time_d(data) - data->philos[i].last_meal >= data->ttd)
 		{
 			*id = i;
-			pthread_mutex_lock(&data->write_lock);
-			write_log(get_time_d(data), i, "died.");
 			safe_write_end(&data->end_lock, &data->end, true);
 			pthread_mutex_unlock(&data->philos[i].meal_lock);
 			return (true);
 		}
 		pthread_mutex_unlock(&data->philos[i].meal_lock);
+		i++;
 	}
 	return (false);
 }
@@ -56,20 +55,18 @@ void	run(t_data *data)
 	{
 		if (check_if_done(data))
 		{
-			pthread_mutex_lock(&data->write_lock);
-			safe_write_end(&data->end_lock, &data->end, true);
+			// printf("DONE");
 			break ;
 		}
-		else if (check_for_death(data, &id))
+		if (check_for_death(data, &id))
 		{
-			// pthread_mutex_lock(&data->write_lock);
-			// safe_set_end(&data->end_lock, &data->end, true);
-			// printf("%d %d died.", get_time_d(data), id);
+			safe_write_log(&data->write_lock, get_time_d(data), id, "died");
+			// printf("DEATH");
 			break ;
 		}
 	}
 	i = -1;
 	while (++i < data->nb_philos)
 		pthread_join(data->philos[i].thread, NULL);
-	pthread_mutex_unlock(&data->write_lock);
+	// pthread_mutex_unlock(&data->write_lock);
 }

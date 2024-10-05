@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 20:13:59 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/04 16:41:29 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/05 17:56:00 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool	safe_read_end(pthread_mutex_t *end_lock, bool *end)
 {
 	bool	val;
 
+	(void) end_lock;
 	pthread_mutex_lock(end_lock);
 	val = *end;
 	pthread_mutex_unlock(end_lock);

@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/04 17:00:06 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/05 17:49:53 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_philo
 	bool			*end;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*forks[2];
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*end_lock;
 	pthread_mutex_t	meal_lock;
