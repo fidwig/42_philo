@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:27:21 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/05 18:18:35 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/07 17:05:40 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_philo(t_data *data, t_philo *philo, int id)
 	philo->id = id;
 	philo->left_fork = &data->forks[id];
 	philo->right_fork = &data->forks[(id + 1) % data->nb_philos];
-	philo->state = 0;
 	philo->end = &data->end;
 	philo->nb_philos = data->nb_philos;
 	philo->start_time = &data->start_time;
@@ -37,7 +36,7 @@ void	init_philos(t_data *data)
 	int	i;
 
 	i = 0;
-	data->philos = calloc(data->nb_philos, sizeof(t_philo));
+	data->philos = ft_calloc(data->nb_philos, sizeof(t_philo));
 	while (i < data->nb_philos)
 	{
 		init_philo(data, &data->philos[i], i);
@@ -81,66 +80,20 @@ void	*philo_start(void *arg)
 	philo = (t_philo *) arg;
 	pthread_mutex_lock(philo->start_lock);
 	philo->sms = get_ms(*philo->start_time);
-	// usleep((suseconds_t) 1);
 	pthread_mutex_unlock(philo->start_lock);
 	while (!safe_read_end(philo->end_lock, philo->end))
 	{
 		if (philo->id % 2)
-		{
-			pthread_mutex_lock(philo->left_fork);
-			pthread_mutex_lock(philo->write_lock);
-			if (!safe_read_end(philo->end_lock, philo->end))
-				write_log(get_time(philo), philo->id, "has taken a fork");
-			pthread_mutex_unlock(philo->write_lock);
-			pthread_mutex_lock(philo->right_fork);
-			pthread_mutex_lock(philo->write_lock);
-			if (!safe_read_end(philo->end_lock, philo->end))
-				write_log(get_time(philo), philo->id, "has taken a fork");
-			pthread_mutex_unlock(philo->write_lock);
-		}
+			take_forks(philo, philo->left_fork, philo->right_fork);
 		else
-		{
-			pthread_mutex_lock(philo->right_fork);
-			pthread_mutex_lock(philo->write_lock);
-			if (!safe_read_end(philo->end_lock, philo->end))
-				write_log(get_time(philo), philo->id, "has taken a fork");
-			pthread_mutex_unlock(philo->write_lock);
-			pthread_mutex_lock(philo->left_fork);
-			pthread_mutex_lock(philo->write_lock);
-			if (!safe_read_end(philo->end_lock, philo->end))
-				write_log(get_time(philo), philo->id, "has taken a fork");
-			pthread_mutex_unlock(philo->write_lock);
-		}
+			take_forks(philo, philo->right_fork, philo->left_fork);
+		if (philo->nb_philos == 1)
+			break ;
 		pthread_mutex_lock(philo->write_lock);
-		if (!safe_read_end(philo->end_lock, philo->end))
-			write_log(get_time(philo), philo->id, "is eating");
-		pthread_mutex_unlock(philo->write_lock);
-		philo->meal_count++;
-		if (philo->meal_count == philo->meal_goal)
-		{
-			pthread_mutex_lock(philo->done_lock);
-			(*philo->total_philo_done)++;
-			if (*philo->total_philo_done == philo->nb_philos)
-				safe_write_end(philo->end_lock, philo->end, true);
-			pthread_mutex_unlock(philo->done_lock);
-		}
-		pthread_mutex_lock(&philo->meal_lock);
-		philo->last_meal = get_time(philo);
-		pthread_mutex_unlock(&philo->meal_lock);
-		usleep(philo->time_to_eat * 1000);
+		eat(philo);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
-
-		pthread_mutex_lock(philo->write_lock);
-		if (!safe_read_end(philo->end_lock, philo->end))
-			write_log(get_time(philo), philo->id, "is sleeping");
-		pthread_mutex_unlock(philo->write_lock);
-		usleep(philo->time_to_sleep * 1000);
-
-		pthread_mutex_lock(philo->write_lock);
-		if (!safe_read_end(philo->end_lock, philo->end))
-			write_log(get_time(philo), philo->id, "is thinking");
-		pthread_mutex_unlock(philo->write_lock);
+		sleep_and_think(philo);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:16:05 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/04 17:07:46 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:52:36 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,31 @@ void	init_data(t_data *data, int ac, char **av)
 	data->forks = ft_calloc(data->nb_philos, sizeof(pthread_mutex_t));
 	while (i < data->nb_philos)
 		pthread_mutex_init(&data->forks[i++], NULL);
-	init_philos(data);
 	data->ttd = (t_ms) ft_atoi(av[2]);
 	data->tte = (t_ms) ft_atoi(av[3]);
 	data->tts = (t_ms) ft_atoi(av[4]);
 	data->meal_goal = -1;
 	if (data->ac > 5)
 		data->meal_goal = ft_atoi(av[5]);
-	// printf("ttd%zu tte%zu tts%zu mg%d", data->ttd, data->tte, data->tts, data->meal_goal);
+	init_philos(data);
 }
 
 void	clear_data(t_data *data)
 {
-	(void) data;
+	int	i;
+
+	i = -1;
+	while (++i < data->nb_philos)
+		pthread_mutex_destroy(&data->forks[i]);
+	free(data->forks);
+	i = -1;
+	while (++i < data->nb_philos)
+		pthread_mutex_destroy(&data->philos[i].meal_lock);
+	free(data->philos);
+	pthread_mutex_destroy(&data->done_lock);
+	pthread_mutex_destroy(&data->end_lock);
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->start_lock);
 }
 
 int	main(int ac, char **av)
@@ -50,7 +62,7 @@ int	main(int ac, char **av)
 	if (ac < 5)
 		return (1);
 	init_data(&data, ac, av);
-	init_philos(&data);
 	run(&data);
+	clear_data(&data);
 	return (0);
 }

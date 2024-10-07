@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/05 17:49:53 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:41:43 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				state;
 
 	int				meal_count;
 	int				meal_goal;
@@ -90,6 +89,11 @@ void			start_philos(t_data *data);
 void			*join_philos(t_data *data);
 void			*philo_start(void *arg);
 void			run(t_data *data);
+
+void			take_forks(t_philo *philo, pthread_mutex_t *fst,
+					pthread_mutex_t *snd);
+void			eat(t_philo *philo);
+void			sleep_and_think(t_philo *philo);
 
 unsigned long	get_ms(struct timeval tv);
 unsigned long	get_time(t_philo *philo);
