@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/07 16:41:43 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/19 05:59:29 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <string.h>
 # include <stdio.h>
 # include <stdbool.h>
+
+# define BETTER_SLEEP_TIME 10
 
 typedef unsigned long	t_ms;
 
@@ -98,6 +100,8 @@ void			sleep_and_think(t_philo *philo);
 unsigned long	get_ms(struct timeval tv);
 unsigned long	get_time(t_philo *philo);
 unsigned long	get_time_d(t_data *data);
+unsigned long	get_now(void);
+void			better_usleep(unsigned long ms);
 
 void			*ft_calloc(size_t nmemb, size_t size);
 int				ft_atoi(const char *nptr);

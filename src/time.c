@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:49:16 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/04 16:42:36 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/19 06:04:18 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,41 @@ unsigned long	get_time_d(t_data *data)
 
 	gettimeofday(&tv, NULL);
 	return (get_ms(tv) - get_ms(data->start_time));
+}
+
+unsigned long	get_now(void)
+{
+	struct timeval	now;
+
+	gettimeofday(&now, NULL);
+	return (get_ms(now));
+}
+
+// void	better_usleep(unsigned long ms)
+// {
+// 	usleep(ms * 1000);
+// }
+
+// void	better_usleep(unsigned long ms)
+// {
+// 	unsigned long	start;
+// 	suseconds_t		better;
+
+// 	better = ms / BETTER_SLEEP_TIME;
+// 	start = get_now();
+// 	while (get_now() - start < ms - better)
+// 		usleep(better * 1000);
+// }
+
+void	better_usleep(unsigned long ms)
+{
+	unsigned long	count;
+	unsigned long	last;
+
+	count = ms / BETTER_SLEEP_TIME;
+	last = ms % BETTER_SLEEP_TIME;
+	while (--count > 0)
+		usleep(BETTER_SLEEP_TIME * 1000);
+	if (last > 0)
+		usleep(last * 1000);
 }

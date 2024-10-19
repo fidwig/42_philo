@@ -1,7 +1,7 @@
 NAME := philo
 CC := clang -g3
 CFLAGS := -Wall -Wextra -Werror
-CPPFLAGS := -MMD -MP -I inc -pthread
+CPPFLAGS := -MMD -MP -I inc -pthread #-lpthread
 RM := rm -rf
 SRC_DIR := src
 INC_DIR := inc
@@ -17,7 +17,7 @@ all: $(NAME)
 
 $(NAME): $(BUILD_DIR) $(OBJS) $(HEADER)
 	@echo Compiling $(NAME)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME)
 
 # bonus: $(BUILD_DIR) $(BONUS_OBJS) $(BONUS_HEADER) $(HEADER)
 #	$(CC) $(CFLAGS) $(BONUS_OBJS) -o $(BONUS_NAME)

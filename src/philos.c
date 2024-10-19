@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:27:21 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/07 17:05:40 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/19 06:04:01 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	*philo_start(void *arg)
 	philo = (t_philo *) arg;
 	pthread_mutex_lock(philo->start_lock);
 	philo->sms = get_ms(*philo->start_time);
+	// philo->sms = get_now();
 	pthread_mutex_unlock(philo->start_lock);
 	while (!safe_read_end(philo->end_lock, philo->end))
 	{

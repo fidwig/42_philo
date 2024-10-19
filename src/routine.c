@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:20:58 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/07 17:05:03 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/19 04:35:46 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = get_time(philo);
 	pthread_mutex_unlock(&philo->meal_lock);
-	usleep(philo->time_to_eat * 1000);
+	better_usleep(philo->time_to_eat);
 }
 
 void	sleep_and_think(t_philo *philo)
@@ -54,7 +54,7 @@ void	sleep_and_think(t_philo *philo)
 	if (!safe_read_end(philo->end_lock, philo->end))
 		write_log(get_time(philo), philo->id, "is sleeping");
 	pthread_mutex_unlock(philo->write_lock);
-	usleep(philo->time_to_sleep * 1000);
+	better_usleep(philo->time_to_sleep);
 	pthread_mutex_lock(philo->write_lock);
 	if (!safe_read_end(philo->end_lock, philo->end))
 		write_log(get_time(philo), philo->id, "is thinking");

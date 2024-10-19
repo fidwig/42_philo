@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:04:11 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/07 17:41:01 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/10/19 05:53:01 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ bool	check_if_done(t_data *data)
 bool	check_for_death(t_data *data, int *id)
 {
 	int				i;
-	unsigned long	t;
+	// unsigned long	t;
 
 	i = 0;
 	while (i < data->nb_philos)
 	{
-		t = get_time_d(data);
+		// t = get_time_d(data);
 		pthread_mutex_lock(&data->philos[i].meal_lock);
-		if (get_time_d(data) - data->philos[i].last_meal > data->ttd) // >= if philo eats and dies at the same time.
+		if (get_time_d(data) - data->philos[i].last_meal > data->ttd)
 		{
 			*id = i;
 			safe_write_end(&data->end_lock, &data->end, true);
