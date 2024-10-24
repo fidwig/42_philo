@@ -55,6 +55,8 @@ void	sleep_and_think(t_philo *philo)
 		write_log(get_time(philo), philo->id, "is sleeping");
 	pthread_mutex_unlock(philo->write_lock);
 	better_usleep(philo->time_to_sleep);
+	if (philo->nb_philos % 2 && philo->time_to_eat + 3 > philo->time_to_sleep)
+		better_usleep(philo->time_to_eat - philo->time_to_sleep + BST);
 	pthread_mutex_lock(philo->write_lock);
 	if (!safe_read_end(philo->end_lock, philo->end))
 		write_log(get_time(philo), philo->id, "is thinking");

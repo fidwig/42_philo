@@ -25,7 +25,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define BETTER_SLEEP_TIME 10
+# define BETTER_SLEEP_TIME	10
+# define BST				10
 
 typedef unsigned long	t_ms;
 

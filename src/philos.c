@@ -21,7 +21,7 @@ void	init_philo(t_data *data, t_philo *philo, int id)
 	philo->total_philo_done = &data->total_philo_done;
 	pthread_mutex_init(&philo->meal_lock, NULL);
 	philo->meal_goal = data->meal_goal;
-	philo->id = id;
+	philo->id = id + 1;
 	philo->left_fork = &data->forks[id];
 	philo->right_fork = &data->forks[(id + 1) % data->nb_philos];
 	philo->end = &data->end;
@@ -80,7 +80,6 @@ void	*philo_start(void *arg)
 	philo = (t_philo *) arg;
 	pthread_mutex_lock(philo->start_lock);
 	philo->sms = get_ms(*philo->start_time);
-	// philo->sms = get_now();
 	pthread_mutex_unlock(philo->start_lock);
 	while (!safe_read_end(philo->end_lock, philo->end))
 	{

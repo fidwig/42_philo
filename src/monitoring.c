@@ -25,12 +25,10 @@ bool	check_if_done(t_data *data)
 bool	check_for_death(t_data *data, int *id)
 {
 	int				i;
-	// unsigned long	t;
 
 	i = 0;
 	while (i < data->nb_philos)
 	{
-		// t = get_time_d(data);
 		pthread_mutex_lock(&data->philos[i].meal_lock);
 		if (get_time_d(data) - data->philos[i].last_meal > data->ttd)
 		{

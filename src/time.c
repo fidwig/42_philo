@@ -44,10 +44,10 @@ unsigned long	get_now(void)
 	return (get_ms(now));
 }
 
-// void	better_usleep(unsigned long ms)
-// {
-// 	usleep(ms * 1000);
-// }
+void	better_usleep(unsigned long ms)
+{
+	usleep(ms * 1000);
+}
 
 // void	better_usleep(unsigned long ms)
 // {
@@ -56,19 +56,19 @@ unsigned long	get_now(void)
 
 // 	better = ms / BETTER_SLEEP_TIME;
 // 	start = get_now();
-// 	while (get_now() - start < ms - better)
+// 	while (get_now() - start < ms)
 // 		usleep(better * 1000);
 // }
 
-void	better_usleep(unsigned long ms)
-{
-	unsigned long	count;
-	unsigned long	last;
+// void	better_usleep(unsigned long ms)
+// {
+// 	unsigned long	count;
+// 	unsigned long	last;
 
-	count = ms / BETTER_SLEEP_TIME;
-	last = ms % BETTER_SLEEP_TIME;
-	while (--count > 0)
-		usleep(BETTER_SLEEP_TIME * 1000);
-	if (last > 0)
-		usleep(last * 1000);
-}
+// 	count = ms / BETTER_SLEEP_TIME;
+// 	last = ms % BETTER_SLEEP_TIME;
+// 	while (--count > 0)
+// 		usleep(BETTER_SLEEP_TIME * 1000);
+// 	if (last > 0)
+// 		usleep(last * 1000);
+// }
