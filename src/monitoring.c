@@ -30,7 +30,7 @@ bool	check_for_death(t_data *data, int *id)
 	while (i < data->nb_philos)
 	{
 		pthread_mutex_lock(&data->philos[i].meal_lock);
-		if (get_time_d(data) - data->philos[i].last_meal > data->ttd)
+		if (get_time_d(data) - data->philos[i].last_meal > (t_ms) data->ttd)
 		{
 			*id = i;
 			safe_write_end(&data->end_lock, &data->end, true);

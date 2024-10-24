@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-unsigned long	get_ms(struct timeval tv)
+unsigned long	get_sms(struct timeval tv)
 {
 	unsigned long	ms;
 
@@ -25,7 +25,7 @@ unsigned long	get_time(t_philo *philo)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (get_ms(tv) - philo->sms);
+	return (get_sms(tv) - philo->sms);
 }
 
 unsigned long	get_time_d(t_data *data)
@@ -33,7 +33,7 @@ unsigned long	get_time_d(t_data *data)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (get_ms(tv) - get_ms(data->start_time));
+	return (get_sms(tv) - get_sms(data->start_time));
 }
 
 unsigned long	get_now(void)
@@ -41,13 +41,14 @@ unsigned long	get_now(void)
 	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	return (get_ms(now));
+	return (get_sms(now));
 }
 
 void	better_usleep(unsigned long ms)
 {
 	usleep(ms * 1000);
 }
+//regular usleep seems to work better for some reason
 
 // void	better_usleep(unsigned long ms)
 // {

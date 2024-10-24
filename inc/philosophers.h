@@ -29,6 +29,7 @@
 # define BST				10
 
 typedef unsigned long	t_ms;
+typedef long			t_sms;
 
 typedef struct s_philo
 {
@@ -39,10 +40,10 @@ typedef struct s_philo
 	int				meal_goal;
 	int				*total_philo_done;
 	struct timeval	*start_time;
-	t_ms			time_to_eat;
-	t_ms			time_to_sleep;
+	t_sms			time_to_eat;
+	t_sms			time_to_sleep;
 	suseconds_t		sms;
-	t_ms			last_meal;
+	t_sms			last_meal;
 
 	int				nb_philos;
 
@@ -62,9 +63,9 @@ typedef struct s_data
 	int				ac;
 	char			**av;
 
-	t_ms			ttd;
-	t_ms			tte;
-	t_ms			tts;
+	t_sms			ttd;
+	t_sms			tte;
+	t_sms			tts;
 	int				meal_goal;
 	int				nb_philos;
 	int				total_philo_done;
@@ -93,12 +94,14 @@ void			*join_philos(t_data *data);
 void			*philo_start(void *arg);
 void			run(t_data *data);
 
+void			error(t_data *data);
+
 void			take_forks(t_philo *philo, pthread_mutex_t *fst,
 					pthread_mutex_t *snd);
 void			eat(t_philo *philo);
 void			sleep_and_think(t_philo *philo);
 
-unsigned long	get_ms(struct timeval tv);
+unsigned long	get_sms(struct timeval tv);
 unsigned long	get_time(t_philo *philo);
 unsigned long	get_time_d(t_data *data);
 unsigned long	get_now(void);

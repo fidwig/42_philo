@@ -79,7 +79,7 @@ void	*philo_start(void *arg)
 
 	philo = (t_philo *) arg;
 	pthread_mutex_lock(philo->start_lock);
-	philo->sms = get_ms(*philo->start_time);
+	philo->sms = get_sms(*philo->start_time);
 	pthread_mutex_unlock(philo->start_lock);
 	while (!safe_read_end(philo->end_lock, philo->end))
 	{

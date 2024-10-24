@@ -28,13 +28,16 @@ void	init_data(t_data *data, int ac, char **av)
 	data->forks = ft_calloc(data->nb_philos, sizeof(pthread_mutex_t));
 	while (i < data->nb_philos)
 		pthread_mutex_init(&data->forks[i++], NULL);
-	data->ttd = (t_ms) ft_atoi(av[2]);
-	data->tte = (t_ms) ft_atoi(av[3]);
-	data->tts = (t_ms) ft_atoi(av[4]);
+	data->ttd = (t_sms) ft_atoi(av[2]);
+	data->tte = (t_sms) ft_atoi(av[3]);
+	data->tts = (t_sms) ft_atoi(av[4]);
 	data->meal_goal = -1;
 	if (data->ac > 5)
 		data->meal_goal = ft_atoi(av[5]);
 	init_philos(data);
+	if (data->nb_philos < 0
+		|| data->ttd < 0 || data->tte < 0 || data->tts < 0)
+		error(data);
 }
 
 void	clear_data(t_data *data)
@@ -53,6 +56,13 @@ void	clear_data(t_data *data)
 	pthread_mutex_destroy(&data->end_lock);
 	pthread_mutex_destroy(&data->write_lock);
 	pthread_mutex_destroy(&data->start_lock);
+}
+
+void	error(t_data *data)
+{
+	printf("error\n");
+	clear_data(data);
+	exit(EXIT_FAILURE);
 }
 
 int	main(int ac, char **av)
