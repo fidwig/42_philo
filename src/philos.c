@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:27:21 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/19 06:04:01 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/02 17:44:47 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	start_philos(t_data *data)
 	int	i;
 
 	pthread_mutex_lock(&data->start_lock);
+	gettimeofday(&data->start_time, NULL);
 	i = 0;
 	while (i < data->nb_philos)
 	{
@@ -56,6 +57,9 @@ void	start_philos(t_data *data)
 			philo_start, (void *)(&data->philos[i]));
 		i += 2;
 	}
+	pthread_mutex_unlock(&data->start_lock);
+	usleep(240);
+	pthread_mutex_lock(&data->start_lock);
 	i = 1;
 	while (i < data->nb_philos)
 	{
@@ -63,7 +67,6 @@ void	start_philos(t_data *data)
 			philo_start, (void *)(&data->philos[i]));
 		i += 2;
 	}
-	gettimeofday(&data->start_time, NULL);
 	pthread_mutex_unlock(&data->start_lock);
 }
 

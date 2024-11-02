@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:20:58 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/19 04:35:46 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/02 18:05:17 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,26 @@ void	take_forks(t_philo *philo, pthread_mutex_t *fst, pthread_mutex_t *snd)
 
 void	eat(t_philo *philo)
 {
-	if (!safe_read_end(philo->end_lock, philo->end))
-		write_log(get_time(philo), philo->id, "is eating");
-	pthread_mutex_unlock(philo->write_lock);
+	bool	is_last;
+
+	is_last = false;
 	philo->meal_count++;
 	if (philo->meal_count == philo->meal_goal)
 	{
 		pthread_mutex_lock(philo->done_lock);
 		(*philo->total_philo_done)++;
-		if (*philo->total_philo_done == philo->nb_philos)
+		is_last = *philo->total_philo_done == philo->nb_philos;
+		if (is_last)
 			safe_write_end(philo->end_lock, philo->end, true);
 		pthread_mutex_unlock(philo->done_lock);
 	}
+	if (!safe_read_end(philo->end_lock, philo->end) || is_last)
+		write_log(get_time(philo), philo->id, "is eating");
+	pthread_mutex_unlock(philo->write_lock);
+	better_usleep(philo->time_to_eat);
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = get_time(philo);
 	pthread_mutex_unlock(&philo->meal_lock);
-	better_usleep(philo->time_to_eat);
 }
 
 void	sleep_and_think(t_philo *philo)
