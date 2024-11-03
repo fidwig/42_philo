@@ -8,7 +8,8 @@ INC_DIR := inc
 BUILD_DIR := .build
 HEADER := philosophers.h
 HEADER := $(HEADER:%=$(INC_DIR)/%)
-SRCS := main.c philos.c routine.c safe_operations.c utils.c time.c monitoring.c
+SRCS := main.c philos.c routine.c safe_operations.c utils.c time.c monitoring.c \
+		init_and_end.c errors.c
 SRCS := $(SRCS:%=$(SRC_DIR)/%)
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:%.o=%.d)

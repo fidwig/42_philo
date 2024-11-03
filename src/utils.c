@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:58:52 by jsommet           #+#    #+#             */
-/*   Updated: 2024/09/30 22:07:45 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/03 19:49:07 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ int	ft_atoi(const char *nptr)
 	while (ft_isdigit(nptr[i]) && nptr[i])
 		n = n * 10 + (nptr[i++] - '0');
 	return ((int)n * s);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	while (*s)
+		write(fd, s++, 1);
 }

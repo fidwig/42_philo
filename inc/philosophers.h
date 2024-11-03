@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/19 05:59:29 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/03 20:35:45 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,13 @@ typedef struct s_data
 	pthread_mutex_t	start_lock;
 }	t_data;
 
+void			init_philo(t_data *data, t_philo *philo, int id);
+void			init_philos(t_data *data);
+void			init_data(t_data *data, int ac, char **av);
+void			clear_data(t_data *data);
+
+void			clean_exit(t_data *data, int exit_code);
+
 bool			safe_read_end(pthread_mutex_t *end_lock, bool *end);
 bool			safe_write_end(pthread_mutex_t *end_lock,
 					bool *dead, bool val);
@@ -87,14 +94,14 @@ int				safe_write_log(pthread_mutex_t *wlck,
 					suseconds_t ts, int id, char *act);
 int				write_log(suseconds_t ts, int id, char *act);
 void			safe_putstr(pthread_mutex_t *write_lock, char *str);
-void			init_philo(t_data *data, t_philo *philo, int id);
-void			init_philos(t_data *data);
 void			start_philos(t_data *data);
 void			*join_philos(t_data *data);
 void			*philo_start(void *arg);
 void			run(t_data *data);
 
-void			error(t_data *data);
+void			error(char *err);
+void			usage_error(char **av);
+void			check_for_invalid_argument(int ac, char **av);
 
 void			take_forks(t_philo *philo, pthread_mutex_t *fst,
 					pthread_mutex_t *snd);
@@ -109,4 +116,6 @@ void			better_usleep(unsigned long ms);
 
 void			*ft_calloc(size_t nmemb, size_t size);
 int				ft_atoi(const char *nptr);
+void			ft_putstr_fd(char *s, int fd);
+
 #endif // !PHILOSOPHERS_H

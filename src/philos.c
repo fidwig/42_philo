@@ -6,43 +6,11 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:27:21 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/02 17:44:47 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/03 19:04:57 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	init_philo(t_data *data, t_philo *philo, int id)
-{
-	philo->start_lock = &data->start_lock;
-	philo->end_lock = &data->end_lock;
-	philo->write_lock = &data->write_lock;
-	philo->done_lock = &data->done_lock;
-	philo->total_philo_done = &data->total_philo_done;
-	pthread_mutex_init(&philo->meal_lock, NULL);
-	philo->meal_goal = data->meal_goal;
-	philo->id = id + 1;
-	philo->left_fork = &data->forks[id];
-	philo->right_fork = &data->forks[(id + 1) % data->nb_philos];
-	philo->end = &data->end;
-	philo->nb_philos = data->nb_philos;
-	philo->start_time = &data->start_time;
-	philo->time_to_eat = data->tte;
-	philo->time_to_sleep = data->tts;
-}
-
-void	init_philos(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->philos = ft_calloc(data->nb_philos, sizeof(t_philo));
-	while (i < data->nb_philos)
-	{
-		init_philo(data, &data->philos[i], i);
-		i++;
-	}
-}
 
 void	start_philos(t_data *data)
 {
