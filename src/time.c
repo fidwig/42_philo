@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:49:16 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/19 06:04:18 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/06 20:37:42 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,7 @@ unsigned long	get_now(void)
 	return (get_sms(now));
 }
 
-void	better_usleep(unsigned long ms)
+void	msleep(unsigned long ms)
 {
 	usleep(ms * 1000);
 }
-//regular usleep seems to work better for some reason
-
-// void	better_usleep(unsigned long ms)
-// {
-// 	unsigned long	start;
-// 	suseconds_t		better;
-
-// 	better = ms / BETTER_SLEEP_TIME;
-// 	start = get_now();
-// 	while (get_now() - start < ms)
-// 		usleep(better * 1000);
-// }
-
-// void	better_usleep(unsigned long ms)
-// {
-// 	unsigned long	count;
-// 	unsigned long	last;
-
-// 	count = ms / BETTER_SLEEP_TIME;
-// 	last = ms % BETTER_SLEEP_TIME;
-// 	while (--count > 0)
-// 		usleep(BETTER_SLEEP_TIME * 1000);
-// 	if (last > 0)
-// 		usleep(last * 1000);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:04:11 by jsommet           #+#    #+#             */
-/*   Updated: 2024/10/19 05:53:01 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/07 16:58:35 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	run(t_data *data)
 			safe_write_log(&data->write_lock, get_time_d(data), id, "died");
 			break ;
 		}
+		if (VALGRINDABLE)
+			usleep(800);
 	}
 	i = -1;
 	while (++i < data->nb_philos)

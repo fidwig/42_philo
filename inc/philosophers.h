@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/03 20:35:45 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/07 16:58:28 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define BETTER_SLEEP_TIME	10
 # define BST				10
+# ifndef VALGRINDABLE
+#  define VALGRINDABLE 1
+# endif
 
 typedef unsigned long	t_ms;
 typedef long			t_sms;
@@ -112,7 +114,7 @@ unsigned long	get_sms(struct timeval tv);
 unsigned long	get_time(t_philo *philo);
 unsigned long	get_time_d(t_data *data);
 unsigned long	get_now(void);
-void			better_usleep(unsigned long ms);
+void			msleep(unsigned long ms);
 
 void			*ft_calloc(size_t nmemb, size_t size);
 int				ft_atoi(const char *nptr);
