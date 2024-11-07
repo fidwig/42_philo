@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:20:58 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/06 20:37:47 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/07 17:17:07 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	take_forks(t_philo *philo, pthread_mutex_t *fst, pthread_mutex_t *snd)
 		write_log(get_time(philo), philo->id, "has taken a fork");
 	pthread_mutex_unlock(philo->write_lock);
 	if (philo->nb_philos == 1)
+	{
+		pthread_mutex_unlock(fst);
 		return ;
+	}
 	pthread_mutex_lock(snd);
 	pthread_mutex_lock(philo->write_lock);
 	if (!safe_read_end(philo->end_lock, philo->end))
