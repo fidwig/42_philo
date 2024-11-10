@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/07 16:58:28 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/08 19:23:17 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ unsigned long	get_sms(struct timeval tv);
 unsigned long	get_time(t_philo *philo);
 unsigned long	get_time_d(t_data *data);
 unsigned long	get_now(void);
-void			msleep(unsigned long ms);
+void			msleep(unsigned long ms, t_philo *philo);
 
 void			*ft_calloc(size_t nmemb, size_t size);
 int				ft_atoi(const char *nptr);

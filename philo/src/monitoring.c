@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 19:04:11 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/07 16:58:35 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/08 19:18:37 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	check_for_death(t_data *data, int *id)
 		pthread_mutex_lock(&data->philos[i].meal_lock);
 		if (get_time_d(data) - data->philos[i].last_meal > (t_ms) data->ttd)
 		{
-			*id = i;
+			*id = i + 1;
 			safe_write_end(&data->end_lock, &data->end, true);
 			pthread_mutex_unlock(&data->philos[i].meal_lock);
 			return (true);
