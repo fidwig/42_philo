@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 17:49:16 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/08 19:59:08 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/13 22:49:41 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,17 @@ unsigned long	get_now(void)
 	return (get_sms(now));
 }
 
-void	msleep(unsigned long ms, t_philo *philo)
+void	msleep(t_ms	ms, t_philo *philo)
 {
-	(void) philo;
-	usleep(ms * 1000);
-	// unsigned long	start;
+	t_ms	end;
 
-	// start = get_now();
-	// while (get_now() - start < ms)
-	// {
-	// 	if (safe_read_end(philo->end_lock, philo->end))
-	// 		break ;
-	// 	usleep(ms / 10);
-	// }
-	//idfk what i should do here fuck this shitty project
-	//rest is fixed tho
+	end = get_now() + ms;
+	while (1)
+	{
+		if (get_now() >= end)
+			break ;
+		if (safe_read_end(philo->end_lock, philo->end))
+			break ;
+		usleep(800);
+	}
 }

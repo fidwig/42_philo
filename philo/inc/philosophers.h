@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 17:15:48 by jsommet           #+#    #+#             */
-/*   Updated: 2024/11/08 19:23:17 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/11/12 17:41:19 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define BST				10
+# define BST			3
 # ifndef VALGRINDABLE
-#  define VALGRINDABLE 1
+#  define VALGRINDABLE	1
 # endif
 
 typedef unsigned long	t_ms;
